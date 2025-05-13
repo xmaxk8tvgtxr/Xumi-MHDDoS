@@ -6,7 +6,7 @@ from threading import Lock
 import time
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-BOT_TOKEN = "8137622733:AAHJEiP0Wx3Lis7jVUwuBJgfIT29-3MqEqI"
+BOT_TOKEN = "7822923778:AAHvlw9CnUjYM3qTaG3YDUyupiOw9h7HY7Q"
 ADMIN_ID = 6821953959
 START_PY_PATH = "/workspaces/MHDDoS/start.py"
 
@@ -44,19 +44,19 @@ def handle_start(message):
     if result:
         expiration_date = datetime.strptime(result[0], "%Y-%m-%d %H:%M:%S")
         if datetime.now() > expiration_date:
-            vip_status = "❌ *Seu plano VIP expirou.*"
+            vip_status = "❌ *Gói VIP của bạn đã hết hạn.*"
         else:
             dias_restantes = (expiration_date - datetime.now()).days
             vip_status = (
-                f"✅ CLIENTE VIP!\n"
-                f"⏳ Dias restantes: {dias_restantes} dia(s)\n"
-                f"📅 Expira en: {expiration_date.strftime('%d/%m/%Y %H:%M:%S')}"
+                f"✅ KHÁCH HÀNG VIP!\n"
+                f"⏳ Số ngày còn lại: {dias_restantes} dia(s)\n"
+                f"📅 Hết hạn vào: {expiration_date.strftime('%d/%m/%Y %H:%M:%S')}"
             )
     else:
-        vip_status = "❌ *No tienes un plan vip activo.*"
+        vip_status = "❌ *Bạn không có gói VIP nào đang hoạt động.*"
     markup = InlineKeyboardMarkup()
     button = InlineKeyboardButton(
-        text="💻 VENDEDOR - OFICIAL 💻",
+        text="💻 NGƯỜI BÁN - CHÍNH THỨC 💻",
         url=f"tg://user?id={ADMIN_ID}"
 
     )
@@ -65,7 +65,7 @@ def handle_start(message):
     bot.reply_to(
         message,
         (
-            "🤖 *BIENVENIDO AL CRASH BOT [Free Fire]!*"
+            "🤖 *CHÀO MỪNG ĐẾN VỚI CRASH BOT [Free Fire]!*"
             
 
             f"""
@@ -79,7 +79,7 @@ def handle_start(message):
             """
 ```
 /crash UDP 143.92.125.230:10013 10 900```\n"""
-            "💠 KrizzZModz 🇵🇪 USERS VIP 💠"
+            "💠 Lizimin Modz 🇻🇳 💠"
         ),
         reply_markup=markup,
         parse_mode="Markdown",
@@ -89,14 +89,14 @@ def handle_start(message):
 @bot.message_handler(commands=["vip"])
 def handle_addvip(message):
     if message.from_user.id != ADMIN_ID:
-        bot.reply_to(message, "❌ No eres un vendededor autorizado.")
+        bot.reply_to(message, "❌ Bạn không phải là người bán được ủy quyền.")
         return
 
     args = message.text.split()
     if len(args) != 3:
         bot.reply_to(
             message,
-            "❌ Formato inválido. Use: `/vip <ID> <QUANTOS DIAS>`",
+            "❌ Định dạng không hợp lệ. Sử dụng: `/vip <ID> <QUANTOS DIAS>`",
             parse_mode="Markdown",
         )
         return
@@ -115,7 +115,7 @@ def handle_addvip(message):
         )
         conn.commit()
 
-    bot.reply_to(message, f"✅ Usuário {telegram_id} agregado como VIP por {days} dias.")
+    bot.reply_to(message, f"✅ Tài khoản {telegram_id} được thêm vào như VIP bởi {days} ngày.")
 
 
 @bot.message_handler(commands=["crash"])
@@ -130,16 +130,16 @@ def handle_ping(message):
         result = cursor.fetchone()
 
     if not result:
-        bot.reply_to(message, "❌ No tienes permiso para usar este comando.")
+        bot.reply_to(message, "❌ Bạn không có quyền sử dụng lệnh này.")
         return
 
     expiration_date = datetime.strptime(result[0], "%Y-%m-%d %H:%M:%S")
     if datetime.now() > expiration_date:
-        bot.reply_to(message, "❌ Su acceso vip Expiró")
+        bot.reply_to(message, "❌ Quyền truy cập VIP của bạn đã hết hạn")
         return
 
     if telegram_id in cooldowns and time.time() - cooldowns[telegram_id] < 10:
-        bot.reply_to(message, "❌ Espera 10 segundos antes de iniciar otro ataque y recuerda parar el anterior.")
+        bot.reply_to(message, "❌ Chờ 10 giây trước khi bắt đầu đòn tấn công tiếp theo và nhớ dừng đòn tấn công trước đó.")
         return
 
     args = message.text.split()
@@ -147,11 +147,7 @@ def handle_ping(message):
         bot.reply_to(
             message,
             (
-                "❌ *Formato inválido!*\n\n"
-                "📌 *Uso correto:*\n"
-                "`/crash <TYPE> <IP/HOST:PORT> <THREADS> <MS>`\n\n"
-                "💡 *Ejemplo:*\n"
-                "`/crash UDP 143.92.125.230:10013 10 900`"
+                "❌ Chờ 10 giây trước khi bắt đầu đòn tấn công tiếp theo và nhớ dừng đòn tấn công trước đó."
             ),
             parse_mode="Markdown",
         )
@@ -191,7 +187,7 @@ def handle_stop_attack(call):
 
     if call.from_user.id != telegram_id:
         bot.answer_callback_query(
-            call.id, "❌ Solo el usuario que inicio el ataque puede pararlo"
+            call.id, "❌ Chỉ có người dùng bắt đầu cuộc tấn công mới có thể dừng nó"
         )
         return
 
@@ -200,9 +196,9 @@ def handle_stop_attack(call):
         process.terminate()
         del active_attacks[telegram_id]
 
-        bot.answer_callback_query(call.id, "✅ Ataque parado con éxito.")
+        bot.answer_callback_query(call.id, "✅ Đòn tấn công đã bị đỡ thành công.")
         bot.edit_message_text(
-            "*[⛔] ATAQUE FINALIZADO[⛔]*",
+            "*[⛔] KẾT THÚC CUỘC TẤN CÔNG[⛔]*",
             chat_id=call.message.chat.id,
             message_id=call.message.id,
             parse_mode="Markdown",
