@@ -6,8 +6,8 @@ from threading import Lock
 import time
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-BOT_TOKEN = "TOKEN AQUI"
-ADMIN_ID = 7178876305
+BOT_TOKEN = "8137622733:AAHJEiP0Wx3Lis7jVUwuBJgfIT29-3MqEqI"
+ADMIN_ID = 6821953959
 START_PY_PATH = "/workspaces/MHDDoS/start.py"
 
 bot = telebot.TeleBot(BOT_TOKEN)
