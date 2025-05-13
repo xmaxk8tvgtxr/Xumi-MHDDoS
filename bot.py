@@ -147,7 +147,11 @@ def handle_ping(message):
         bot.reply_to(
             message,
             (
-                "❌ Chờ 10 giây trước khi bắt đầu đòn tấn công tiếp theo và nhớ dừng đòn tấn công trước đó."
+                "❌ Định dạng lệnh không hợp lệ.\n\n"
+                "Cách dùng:\n"
+                "`/crash <TYPE> <IP:PORT> <THREADS> <MS>`\n"
+                "Ví dụ:\n"
+                "`/crash UDP 127.0.0.1:80 10 1000`"
             ),
             parse_mode="Markdown",
         )
